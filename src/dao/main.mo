@@ -73,7 +73,7 @@ actor DAO {
                         };
                         case (null) {
                                 citizens.put(caller, citizen);
-                                let mbtTokens = await tokenCanister.mint(caller, 50);
+                                let mbtTokens = await tokenCanister.mint(caller, 1000);
                                 return #ok(());
                         };
                 };                
