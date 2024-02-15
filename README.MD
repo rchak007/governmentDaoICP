@@ -1,22 +1,92 @@
-# Government DAO
+# Government Budget DAO
 
 
 
 
 
-![image-20240212002836876](Images/image-20240212002836876.png)
+![image-20240215000634967](Images/image-20240215000634967.png)
 
 
 
 
 
-This project is created as a concept where citizens can directly vote on main issues/areas where they want the government to spend money on.
+### Project Overview
 
-Right now it does not have all the bells and whistles but something that is to be expanded upon. So there are some things that are arbitrarily decided.
+This project introduces a groundbreaking approach to governance and public budget allocation through a Decentralized Autonomous Organization (DAO) model, built on the Internet Computer Protocol (ICP) and utilizing the Motoko programming language. By enabling citizens to vote directly on key issues such as Education, Healthcare, Welfare, and Infrastructure, this initiative aims to democratize decision-making processes and ensure that government spending aligns more closely with the public's priorities.
 
-The idea is the main issues like Education, Healthcare, Welfare, Infrastructure etc. are voted by citizens. Each citizen starts with 1000 points which are minted as tokens. they can vote more points on more important issues to them.
+### The Need for Change in Government Budget Allocation
 
-There will be a 6 months expiry once an issue is created. 
+Traditionally, government budget allocation is a top-down process, often lacking in transparency and direct public involvement. Citizens vote for representatives or political parties based on their platforms, but once in office, there is limited accountability for how decisions align with the electorate's preferences. This disconnect can lead to inefficiencies, misallocation of resources, and a general sense of disenfranchisement among the populace.
+
+### Advantages of a DAO Model for Governance
+
+#### **Direct Democracy and Increased Participation**
+
+A DAO model facilitates a more direct form of democracy, allowing citizens to vote on specific issues rather than just choosing representatives. This can increase engagement and give the public a more significant say in how resources are allocated, ensuring that government actions reflect the will of the people.
+
+#### **Transparency and Accountability**
+
+Blockchain technology inherently provides a transparent and immutable record of transactions and decisions. By applying this to government budgeting and decision-making, it ensures that every allocation and its justification are publicly accessible, fostering greater accountability from decision-makers.
+
+#### **Security and Trust**
+
+The decentralized nature of blockchain technology reduces the risk of fraud and corruption, as altering recorded information would require consensus across multiple nodes. This enhances trust in the government's budgeting process, as citizens can verify transactions and decisions independently.
+
+#### **Efficiency and Reduced Bureaucracy**
+
+DAOs can streamline decision-making processes, reducing the need for extensive bureaucratic oversight and potentially lowering administrative costs. By automating certain aspects of the governance process through smart contracts, resources can be allocated more quickly and efficiently to where they are needed most.
+
+### Implementation Challenges and Considerations
+
+While the benefits of a DAO-based governance model are significant, there are also challenges to consider, such as ensuring broad and equitable access to the technology, preventing manipulation or undue influence in the voting process, and integrating this new model with existing legal and governmental frameworks.
+
+### Conclusion
+
+By adopting a DAO model for government budget allocation, we can create a more transparent, accountable, and participatory system of governance. This project represents a step towards realizing that vision, leveraging the power of the ICP and blockchain technology to empower citizens and ensure that government spending aligns with the public's priorities. As we move forward, it will be crucial to address the implementation challenges and work towards a system that truly reflects the will of the people.
+
+This README aims to provide a comprehensive overview of the project's goals, benefits, and considerations. As this project evolves, we welcome contributions, discussions, and feedback from the community to refine and improve this model for democratic governance.
+
+
+
+
+
+The project comprises two main components: the DAO actor and the token actor, along with a types module that defines shared data structures. Here's a summary of each component and their functionalities:
+
+### DAO Actor (`actor DAO`)
+
+[DAO actor code](https://github.com/rchak007/governmentDaoICP/blob/main/src/dao/main.mo)
+
+The DAO actor is the core of the project, facilitating the creation of issues (proposals) that citizens can vote on, registering citizens, and managing votes. It interacts with the token canister to handle the minting and burning of tokens as a means of voting power.
+
+**Key Functionalities:**
+
+- **Citizen Registration:** Allows new citizens to register, granting them an initial amount of tokens (1000 DVT (Government Dao voting tokens) tokens as per the `registerCitizen` function) to participate in voting.
+- **Issue Management:** Any Citizen can create new issues (`createIssue`) for others to vote on. Each issue includes a content description, creator information, creation time, expiry, and votes.
+- **Voting:** Citizens can vote on issues by allocating tokens (`voteIssue`). Votes are transparent, showing the amount of tokens each citizen has allocated to an issue. When a citizen votes with tokens they are burnt and their balance reduces.
+- **Token Interaction:** Interacts with the token canister to mint and burn tokens based on citizen activities such as registration and voting.
+- **Information Queries:** Provides functions to query DAO details (`getDaoName`, `getManifesto`), citizen details, and issue details (`getAllIssues`, `getIssue`).
+- **Web Interface:** Implements an `http_request` function to serve a webpage displaying the DAO's manifesto, name, and a list of issues along with their votes, using a simple HTML template.
+
+### Token Actor (`actor DVTToken`)
+
+[Token Actor code](https://github.com/rchak007/governmentDaoICP/blob/main/src/token_faucet/main.mo)
+
+The token actor manages the custom token (DVT) used for voting within the DAO. It supports basic token functionalities such as minting, burning, transferring, and querying balances.
+
+**Key Functionalities:**
+
+- **Token Information:** Provides the token's name (`Government Dao Voting Token`) and symbol (`DVT`).
+- **Minting and Burning:** Allows the DAO to mint new tokens for new citizens or burn tokens when they vote on issues.
+- **Balance Management:** Citizens can query their token balance (`balanceOf`) or transfer tokens to another principal (`transfer`).
+- **Supply Queries:** Enables querying the total supply of tokens in circulation (`totalSupply`).
+
+### Types Module (`module` in `types.mo`)
+
+[types.mo](https://github.com/rchak007/governmentDaoICP/blob/main/src/dao/types.mo)
+
+Defines common data structures used by the DAO actor, such as `Citizen`, `Vote`, `Issue`, and various types related to HTTP requests and responses. This modular approach ensures type safety and consistency across the DAO and token actors.
+
+
 
 
 
@@ -125,6 +195,12 @@ With this we can also look at the Candid UI for our `dao` canister.
 
 
 ### Unit Testing
+
+
+
+
+
+
 
 First we do some negative tests and also some general info etc without really creating any citizen, issue etc  Just as some simple tests
 
