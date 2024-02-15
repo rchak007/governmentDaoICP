@@ -60,7 +60,7 @@ The DAO actor is the core of the project, facilitating the creation of issues (p
 
 **Key Functionalities:**
 
-- **Citizen Registration:** Allows new citizens to register, granting them an initial amount of tokens (1000 DVT (Government Dao voting tokens) tokens as per the `registerCitizen` function) to participate in voting.
+- **Citizen Registration:** Allows new citizens to register, granting them an initial amount of tokens (1000 DVT (Government Dao voting tokens) tokens as per the `registerCitizen` function) to participate in voting. A citizen needs to provide their Voter Id to be able to register. 
 - **Issue Management:** Any Citizen can create new issues (`createIssue`) for others to vote on. Each issue includes a content description, creator information, creation time, expiry, and votes.
 - **Voting:** Citizens can vote on issues by allocating tokens (`voteIssue`). Votes are transparent, showing the amount of tokens each citizen has allocated to an issue. When a citizen votes with tokens they are burnt and their balance reduces.
 - **Token Interaction:** Interacts with the token canister to mint and burn tokens based on citizen activities such as registration and voting.
@@ -85,6 +85,26 @@ The token actor manages the custom token (DVT) used for voting within the DAO. I
 [types.mo](https://github.com/rchak007/governmentDaoICP/blob/main/src/dao/types.mo)
 
 Defines common data structures used by the DAO actor, such as `Citizen`, `Vote`, `Issue`, and various types related to HTTP requests and responses. This modular approach ensures type safety and consistency across the DAO and token actors.
+
+
+
+
+
+## Scope and Future improvement
+
+Right now the project has basic capabilities. 
+
+- Voter ID - right now we just accept this without any checks. But the future vision is that we can make an API call to verify some basic KYC and maybe have some Decentralized identity coming directly from the Government participation.
+
+- Final results - right now project just takes votes on an issue created and after 6 months no more votes are accepted. But for now there is no more follow up on this. But in future we need to move this to budget finalized state etc. 
+
+- It was decided arbitrarily the 1000 tokens for now. Also we need a way to restart the process in the following year etc. Right now each identity gets only 1000 but if there are subsequent years then its not handled yet.
+
+- does not have capability to change manifesto. in future there can be more break down also on each Issue/Area to provide more content and options to vote.
+
+- Currently citizen can vote multiple times but functionality to reduce their own votes after voting is not built.
+
+  
 
 
 
@@ -198,7 +218,13 @@ With this we can also look at the Candid UI for our `dao` canister.
 
 
 
-
+| Summary of testing and validations                           |
+| ------------------------------------------------------------ |
+| A user has to be registered as Citizen to be able to create an Issue or Vote. Anyone can create Issue to be voted on. |
+| User/Citizen gets 1000 voting tokens very first time they register and can only use that to vote on different issues. If an issue is more important to a user they can use more Voting tokens on that issue. after they vote those tokens are burnt and their balance is reduced. |
+| When issue is created like example Education the user will also establish their initial votes on it. |
+| Citizen can vote multiple times even on same issue- so each time their votes keep getting added |
+| Each Issue will keep track of all the voters who voted with their total votes and also a summed vote count to make it easy to know final total. |
 
 
 
