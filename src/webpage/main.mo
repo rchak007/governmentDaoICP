@@ -2,9 +2,10 @@ import Types "types";
 import Result "mo:base/Result";
 import Text "mo:base/Text";
 
-import daoCanister "canister:dao";
+// import daoCanister "canister:dao";
 
-actor class Webpage(daoPrincipal : Principal) = this {
+// actor class Webpage(daoPrincipal : Principal) = this {
+actor Webpage {
 
     type Result<A, B> = Result.Result<A, B>;
     type HttpRequest = Types.HttpRequest;
@@ -12,10 +13,10 @@ actor class Webpage(daoPrincipal : Principal) = this {
 
     stable var manifesto : Text = "from Webpage - Implement government Budget through DAO";
     // stable var manifesto : Text = await getManifesto();
-    stable var goals : [Text] = [];
+    // stable var goals : [Text] = [];
     // stable var logo : Text = "";
 
-    stable var name : Text = "";
+    // stable var name : Text = "";
 
 
     stable var logo : Text = "<?xml version='1.0' encoding='UTF-8'?>
@@ -75,6 +76,8 @@ actor class Webpage(daoPrincipal : Principal) = this {
             return manifesto;
     };
 
+
+    // This function should only be callable by the DAO canister (no one else should be able to change the manifesto)   
     public shared ({ caller }) func setManifesto(newManifesto : Text) : async Result<(), Text> {
         manifesto := newManifesto;
         return #err("Not implemented");
@@ -84,11 +87,11 @@ actor class Webpage(daoPrincipal : Principal) = this {
     //     return "Not implemented";
     // };
 
-    public shared ({ caller }) func addGoal(goal : Text) : async Result<(), Text> {
-        return #err("Not implemented");
-    };
+    // public shared ({ caller }) func addGoal(goal : Text) : async Result<(), Text> {
+    //     return #err("Not implemented");
+    // };
 
-    public func getGoals() : async [Text] {
-        return [];
-    };
+    // public func getGoals() : async [Text] {
+    //     return [];
+    // };
 };

@@ -11,7 +11,7 @@ actor MBToken {
   let ledger = Map.new<Principal, Nat>();
 
   public query func tokenName() : async Text {
-    return "Dao Voting Token";
+    return "Government Dao Voting Token";
   };
 
   public query func tokenSymbol() : async Text {

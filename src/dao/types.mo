@@ -66,7 +66,7 @@ module {
         created : Time.Time; // The time the proposal was created
         expiry : Time.Time; // The time the proposal was executed or null if not executed
         votes : [Vote]; // The votes on the proposal so far
-        voteScore : Int; // A
+        voteScore : Nat; // A
         // status : IssueStatus; // The current status of the proposal
     };
 
